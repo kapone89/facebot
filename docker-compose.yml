@@ -1,0 +1,27 @@
+version: "3"
+services:
+  facebot_app:
+    container_name: facebot_app
+    image: "kapone89/facebot"
+    depends_on:
+      - facebot_postgres
+    network_mode: bridge
+    links:
+      - facebot_postgres
+    environment:
+      BOT_API_KEY: XXX
+      BOT_NAME: XXX
+      AUTHORISED_USERNAME: XXX
+      FACEBOOK_EMAIL: XXX
+      FACEBOOK_PASSWORD: XXX
+      DATABASE_URL: "postgresql://facebot:181540cdcc0e68cd@facebot_postgres/facebot"
+  facebot_postgres:
+    container_name: facebot_postgres
+    image: "postgres:9.6-alpine"
+    network_mode: bridge
+    environment:
+      POSTGRES_PASSWORD: 181540cdcc0e68cd
+      POSTGRES_USER: facebot
+      POSTGRES_DB: facebot
+    volumes:
+      - /containers/volumes/facebot/postgres_data:/var/lib/postgresql/data
